@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporada 2 - The Last of Us</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            max-width: 20%;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 2rem;
+            margin-top: 80px;
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: #888;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            /* 🖼️ REEMPLAZAR: Imagen de fondo de la Temporada 2 */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #d4af37;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta span {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Countdown Section */
+        .countdown {
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .countdown h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(0, 0, 0, 0.8);
+            color: #d4af37;
+            padding: 1.5rem;
+            border-radius: 15px;
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Season Info */
+        .season-info {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .info-content h2 {
+            font-size: 2.5rem;
+            color: #d4af37;
+            margin-bottom: 2rem;
+        }
+
+        .info-content p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
+        }
+
+        .info-highlights {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-highlights li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-highlights li:before {
+            content: "✓";
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .season-poster {
+            height: 500px;
+            /* 🖼️ REEMPLAZAR: Póster oficial de la Temporada 2 */
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #d4af37;
+            border: 3px solid #d4af37;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .season-poster.official {
+            background-image: url('poster.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .poster-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        /* Cast Section */
+        .cast {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4rem 2rem;
+        }
+
+        .cast-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cast h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .cast-sections {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .cast-section h3 {
+            font-size: 1.8rem;
+            color: #d4af37;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .cast-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cast-card:hover {
+            transform: translateY(-10px);
+            border-color: #d4af37;
+        }
+
+        .cast-photo {
+            width: 120px;
+            height: 120px;
+            /* 🖼️ REEMPLAZAR: Fotos del reparto */
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid #d4af37;
+        }
+
+        .cast-photo-pedro {
+            background-image: url('joel.jpg');
+            background-size: cover;      /* hace que rellene el círculo */
+            background-position: center; /* centra la cara */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .cast-photo-bella {
+            background-image: url('ellie.png');
+            background-size: cover;      /* hace que rellene el círculo */
+            background-position: center; /* centra la cara */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .cast-photo-kaitlyn {
+            background-image: url('aby.png');
+            background-size: cover;      /* hace que rellene el círculo */
+            background-position: center; /* centra la cara */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .cast-photo-isabela {
+            background-image: url('dina.png');
+            background-size: cover;      /* hace que rellene el círculo */
+            background-position: center; /* centra la cara */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .cast-photo-lev {
+            background-image: url('lev.png');
+            background-size: cover;      /* hace que rellene el círculo */
+            background-position: center; /* centra la cara */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .cast-photo-yara {
+            background-image: url('yara.png');
+            background-size: cover;      /* hace que rellene el círculo */
+            background-position: center; /* centra la cara */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .cast-name {
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .cast-character {
+            font-size: 0.9rem;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        .cast-status {
+            font-size: 0.8rem;
+            color: #ff6b6b;
+            font-style: italic;
+        }
+
+        /* Behind the Scenes */
+        .behind-scenes {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .behind-scenes h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .bts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .bts-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .bts-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .bts-image {
+            height: 200px;
+            /* 🖼️ REEMPLAZAR: Imágenes behind the scenes */
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .bts-image-set1 {
+            background-image: url('pcom.png');
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .bts-image-set2 {
+            background-image: url('dest.png');
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .bts-image-set3 {
+            background-image: url('escenario.png');
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .bts-content {
+            padding: 1.5rem;
+        }
+
+        .bts-title {
+            font-size: 1.2rem;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        .bts-date {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+        }
+
+        .bts-description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+        }
+
+        /* Game Comparison */
+        .game-comparison {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4rem 2rem;
+        }
+
+        .comparison-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-comparison h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .comparison-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .comparison-item h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .comparison-image {
+            height: 200px;
+            /* 🖼️ REEMPLAZAR: Imágenes de comparación con el juego */
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+        }
+
+        .comparison-image-game {
+            background-image: url('serie.png');
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+        }
+
+        .comparison-image-show {
+            background-image: url('juego.png');
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+        }
+
+        .newsletter-input::placeholder {
+            color: #999;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            background: #000;
+            color: #d4af37;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* Navigation */
+        .season-nav {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f4d03f;
+        }
+
+        .footer p {
+            color: #888;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .countdown-timer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <img src="logo2.png" class="logo" alt="The Last of Us Logo">
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="temporadas.html">Temporadas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="index.html">Inicio</a>
+            <span>›</span>
+            <a href="temporadas.html">Temporadas</a>
+            <span>›</span>
+            <span>Temporada 2</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Temporada 2</h1>
+            <div class="hero-subtitle">YA DISPONIBLE</div>
+            <div class="hero-meta">
+                <span>📅 2024</span>
+                <span>⭐ 8.5/10</span>
+                <span>🎬 5 Episodios</span>
+                <span>⏱️ ~60 min</span>
+            </div>
+            <p>Cinco años después de los eventos de la primera temporada, Joel y Ellie se enfrentan a nuevos desafíos que pondrán a prueba su relación y los obligarán a cuestionar todo en lo que creen.</p>
+        </div>
+    </section>
+
+    <!-- Season Stats -->
+    <section class="countdown">
+        <h2>Estadísticas de la Temporada</h2>
+        <div class="countdown-timer">
+            <div class="countdown-item">
+                <span class="countdown-number" data-count="5">0</span>
+                <span class="countdown-label">Episodios</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" data-count="12">0</span>
+                <span class="countdown-label">Millones de Espectadores</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" data-count="85">0</span>
+                <span class="countdown-label">% en Rotten Tomatoes</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" data-count="6">0</span>
+                <span class="countdown-label">Nominaciones Emmy</span>
+            </div>
+        </div>
+        <p>¡Una temporada que ha cautivado a millones de espectadores!</p>
+    </section>
+
+    <!-- Season Info -->
+    <section class="season-info">
+        <div class="info-grid">
+            <div class="info-content">
+                <h2>Resumen de la Temporada</h2>
+                <p>
+                    La segunda temporada de The Last of Us continuó la historia cinco años después de los eventos del final de la primera temporada. Basada en el aclamado videojuego "The Last of Us Part II", esta temporada exploró las consecuencias de las decisiones de Joel y el impacto devastador en su relación con Ellie.
+                </p>
+                <p>
+                    Con Pedro Pascal y Bella Ramsey regresando en sus roles principales, la temporada introdujo nuevos personajes que fueron fundamentales para el desarrollo de una historia más oscura y compleja que dividió tanto a críticos como a fanáticos.
+                </p>
+                <ul class="info-highlights">
+                    <li>Pedro Pascal regresó como Joel Miller</li>
+                    <li>Bella Ramsey continuó como Ellie Williams</li>
+                    <li>Kaitlyn Dever como Abby Anderson</li>
+                    <li>Isabela Merced como Dina</li>
+                    <li>Estrenada en enero 2024</li>
+                    <li>Temporada final emitida en abril 2024</li>
+                </ul>
+            </div>
+            <div class="season-poster official">
+                <!-- 🖼️ REEMPLAZAR: Póster oficial de la Temporada 2 -->
+                <div class="poster-overlay">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cast Section -->
+    <section class="cast">
+        <div class="cast-container">
+            <h2>Reparto Confirmado</h2>
+            <div class="cast-sections">
+                <div class="cast-section">
+                    <h3>Reparto Principal</h3>
+                    <div class="cast-grid">
+                        <div class="cast-card">
+                            <!-- 🖼️ REEMPLAZAR: Agregar class="pedro" para foto real -->
+                            <div class="cast-photo-pedro"></div>
+                            <div class="cast-name">Pedro Pascal</div>
+                            <div class="cast-character">Joel Miller</div>
+                            <div class="cast-status">Confirmado</div>
+                        </div>
+                        <div class="cast-card">
+                            <!-- 🖼️ REEMPLAZAR: Agregar class="bella" para foto real -->
+                            <div class="cast-photo-bella"></div>
+                            <div class="cast-name">Bella Ramsey</div>
+                            <div class="cast-character">Ellie Williams</div>
+                            <div class="cast-status">Confirmado</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cast-section">
+                    <h3>Nuevas Incorporaciones</h3>
+                    <div class="cast-grid">
+                        <div class="cast-card">
+                            <!-- 🖼️ REEMPLAZAR: Agregar class="kaitlyn" para foto real -->
+                            <div class="cast-photo-kaitlyn"></div>
+                            <div class="cast-name">Kaitlyn Dever</div>
+                            <div class="cast-character">Abby Anderson</div>
+                            <div class="cast-status">Protagonista</div>
+                        </div>
+                        <div class="cast-card">
+                            <!-- 🖼️ REEMPLAZAR: Agregar class="isabela" para foto real -->
+                            <div class="cast-photo-isabela"></div>
+                            <div class="cast-name">Isabela Merced</div>
+                            <div class="cast-character">Dina</div>
+                            <div class="cast-status">Principal</div>
+                        </div>
+                        <div class="cast-card">
+                            <div class="cast-photo-lev"></div>
+                            <div class="cast-name">Ian Alexander</div>
+                            <div class="cast-character">Lev</div>
+                            <div class="cast-status">Recurrente</div>
+                        </div>
+                        <div class="cast-card">
+                            <div class="cast-photo-yara"></div>
+                            <div class="cast-name">Victoria Grace</div>
+                            <div class="cast-character">Yara</div>
+                            <div class="cast-status">Recurrente</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Behind the Scenes -->
+    <section class="behind-scenes">
+        <h2>Detrás de Cámaras</h2>
+        <div class="bts-grid">
+            <div class="bts-card">
+                <div class="bts-image-set1">
+
+                </div>
+                <div class="bts-content">
+                    <h3 class="bts-title">Producción Completa</h3>
+                    <p class="bts-date">Febrero - Octubre 2023</p>
+                    <p class="bts-description">
+                        La producción de la segunda temporada se completó exitosamente en Vancouver, Canadá. El equipo mantuvo la misma calidad visual y narrativa de la primera temporada, pero con un tono más oscuro y maduro.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bts-card">
+                <div class="bts-image-set2">
+
+                </div>
+                <div class="bts-content">
+                    <h3 class="bts-title">Actuaciones Destacadas</h3>
+                    <p class="bts-date">Enero - Abril 2024</p>
+                    <p class="bts-description">
+                        Las actuaciones de Pedro Pascal, Bella Ramsey y Kaitlyn Dever fueron ampliamente elogiadas por la crítica. La química entre los personajes y las escenas emocionales marcaron la temporada.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bts-card">
+                <div class="bts-image-set3">
+
+                </div>
+                <div class="bts-content">
+                    <h3 class="bts-title">Escenarios Épicos</h3>
+                    <p class="bts-date">Durante toda la temporada</p>
+                    <p class="bts-description">
+                        Los nuevos sets recrearon perfectamente las locaciones icónicas del videojuego Part II, incluyendo Seattle post-apocalíptico, el hospital de las Luciérnagas y las comunidades de supervivientes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Comparison -->
+    <section class="game-comparison">
+        <div class="comparison-container">
+            <h2>Serie vs. Videojuego</h2>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>The Last of Us Part II (Videojuego)</h3>
+                    <div class="comparison-image-game">
+                        
+                    </div>
+                    <p>
+                        El videojuego original de Naughty Dog que sirve como base para la segunda temporada. Lanzado en 2020, fue aclamado por su narrativa compleja y personajes profundos.
+                    </p>
+                    <ul>
+                        <li>Lanzado en junio 2020</li>
+                        <li>Ganador de múltiples premios</li>
+                        <li>Historia de venganza y redención</li>
+                        <li>Nuevos personajes icónicos</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-item">
+                    <h3>Temporada 2 (Serie HBO)</h3>
+                    <div class="comparison-image-show">
+                        
+                    </div>
+                    <p>
+                        La adaptación televisiva mantuvo la esencia del juego mientras exploró nuevas dimensiones de los personajes y expandió la narrativa original.
+                    </p>
+                    <ul>
+                        <li>Estrenada en enero 2024</li>
+                        <li>Adaptación fiel pero expandida</li>
+                        <li>Nuevas perspectivas narrativas</li>
+                        <li>Recepción mixta de críticos y fans</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Episodes List -->
+    <section class="newsletter">
+        <div class="newsletter-container">
+            <h2>Episodios de la Temporada 2</h2>
+            <div style="text-align: left; max-width: 900px; margin: 0 auto;">
+                <div style="background: rgba(0,0,0,0.8); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; gap: 1.5rem; align-items: center;">
+                    <!-- 🖼️ REEMPLAZAR: Imagen del episodio 2x01 -->
+                    <div style="width: 120px; height: 80px; background: linear-gradient(45deg, #d4af37, #f4d03f); border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background-image: url('c1t2.png'); background-size: cover; background-position: center;"></div>
+                    <div>
+                        <h3 style="color: #d4af37; margin: 0 0 0.5rem 0;">2x01: "Infected"</h3>
+                        <p style="margin: 0; color: #e0e0e0;">Ellie y Dina exploran Seattle en busca de venganza, mientras Joel lidia con las consecuencias de sus acciones pasadas.</p>
+                    </div>
+                </div>
+                <div style="background: rgba(0,0,0,0.8); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; gap: 1.5rem; align-items: center;">
+                    <!-- 🖼️ REEMPLAZAR: Imagen del episodio 2x02 -->
+                    <div style="width: 120px; height: 80px; background: linear-gradient(45deg, #d4af37, #f4d03f); border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background-image: url('c2t2.png'); background-size: cover; background-position: center;"></div>
+                    <div>
+                        <h3 style="color: #d4af37; margin: 0 0 0.5rem 0;">2x02: "Please Hold to My Hand"</h3>
+                        <p style="margin: 0; color: #e0e0e0;">Se revela el pasado de Abby y su conexión con Joel, mientras Ellie continúa su búsqueda implacable.</p>
+                    </div>
+                </div>
+                <div style="background: rgba(0,0,0,0.8); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; gap: 1.5rem; align-items: center;">
+                    <!-- 🖼️ REEMPLAZAR: Imagen del episodio 2x03 -->
+                    <div style="width: 120px; height: 80px; background: linear-gradient(45deg, #d4af37, #f4d03f); border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background-image: url('c3t2.png'); background-size: cover; background-position: center;"></div>
+                    <div>
+                        <h3 style="color: #d4af37; margin: 0 0 0.5rem 0;">2x03: "Long, Long Time"</h3>
+                        <p style="margin: 0; color: #e0e0e0;">Ellie y Abby se enfrentan cara a cara, mientras los flashbacks revelan la verdad sobre el hospital.</p>
+                    </div>
+                </div>
+                <div style="background: rgba(0,0,0,0.8); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; gap: 1.5rem; align-items: center;">
+                    <!-- 🖼️ REEMPLAZAR: Imagen del episodio 2x04 -->
+                    <div style="width: 120px; height: 80px; background: linear-gradient(45deg, #d4af37, #f4d03f); border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background-image: url('c4t2.png'); background-size: cover; background-position: center;"></div>
+                    <div>
+                        <h3 style="color: #d4af37; margin: 0 0 0.5rem 0;">2x04: "Endure and Survive"</h3>
+                        <p style="margin: 0; color: #e0e0e0;">Las consecuencias de la venganza se hacen evidentes mientras los personajes luchan con sus decisiones.</p>
+                    </div>
+                </div>
+                <div style="background: rgba(0,0,0,0.8); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; gap: 1.5rem; align-items: center;">
+                    <!-- 🖼️ REEMPLAZAR: Imagen del episodio 2x05 -->
+                    <div style="width: 120px; height: 80px; background: linear-gradient(45deg, #d4af37, #f4d03f); border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background-image: url('c5t2.png'); background-size: cover; background-position: center;"></div>
+                    <div>
+                        <h3 style="color: #d4af37; margin: 0 0 0.5rem 0;">2x05: "Look for the Light"</h3>
+                        <p style="margin: 0; color: #e0e0e0;">El final devastador que divide a los personajes y a los espectadores, cuestionando la naturaleza del perdón.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Season Navigation -->
+    <section class="season-nav">
+        <div class="nav-buttons">
+            <a href="temporada1.html" class="nav-btn">← Temporada 1</a>
+            <a href="temporadas.html" class="nav-btn">Volver a Temporadas</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="galeria.html">Galería</a>
+                <a href="temporadas.html">Temporadas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+            <p>&copy; 2024 The Last of Us Fan Site. Todos los derechos reservados a HBO y Naughty Dog.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Función para animar contadores
+        function animateCounter(element, start, end, suffix = '') {
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let current = start;
+                        const increment = end / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= end) {
+                                element.textContent = end + suffix;
+                                clearInterval(timer);
+                            } else {
+                                element.textContent = Math.floor(current) + suffix;
+                            }
+                        }, 30);
+                        counterObserver.unobserve(element);
+                    }
+                });
+            });
+            counterObserver.observe(element);
+        }
+
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de aparición de elementos al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Configurar animaciones de entrada
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación para las tarjetas BTS
+            const btsCards = document.querySelectorAll('.bts-card');
+            btsCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = `all 0.8s ease ${index * 0.2}s`;
+                observer.observe(card);
+            });
+
+            // Animación para las tarjetas del reparto
+            const castCards = document.querySelectorAll('.cast-card');
+            castCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Animación para los elementos de comparación
+            const comparisonItems = document.querySelectorAll('.comparison-item');
+            comparisonItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = index % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)';
+                item.style.transition = `all 0.8s ease ${index * 0.3}s`;
+                observer.observe(item);
+            });
+
+            // Efecto hover mejorado para las tarjetas
+            btsCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Configurar contadores animados
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                animateCounter(counter, 0, target);
+            });
+
+            // Animación de las estadísticas
+            const statItems = document.querySelectorAll('.countdown-item');
+            statItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(item);
+            });
+        });
+
+        // Efecto parallax suave en el hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < hero.offsetHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Función para mostrar notificaciones (para futuras funcionalidades)
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#d4af37' : '#ff6b6b'};
+                color: ${type === 'success' ? '#000' : '#fff'};
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                z-index: 10000;
+                animation: slideInRight 0.5s ease-out;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Función para compartir en redes sociales
+        function shareOnSocial(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('¡No te pierdas la Temporada 2 de The Last of Us!');
+            
+            let shareUrl = '';
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${text} ${url}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'noopener,noreferrer');
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986ebd5b47347842',t:'MTc1OTE4MzA4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

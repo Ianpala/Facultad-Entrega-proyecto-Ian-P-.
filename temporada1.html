@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporada 1 - The Last of Us</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            max-width: 20%;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 2rem;
+            margin-top: 80px;
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: #888;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            /* 🖼️ REEMPLAZAR: Imagen de fondo de la Temporada 1 */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #d4af37;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta span {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Season Stats */
+        .season-stats {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 2rem;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #d4af37;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Episodes Section */
+        .episodes {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .episodes h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .episodes-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .episode-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 200px;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .episode-thumbnail {
+            /* 🖼️ REEMPLAZAR: Miniaturas de cada episodio */
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep1 {
+            background-image: url('c1t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep2 {
+            background-image: url('c2t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep3 {
+            background-image: url('c3t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep4 {
+            background-image: url('c4t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep5 {
+            background-image: url('c5t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep6 {
+            background-image: url('c6t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep7 {
+            background-image: url('c7t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep8 {
+            background-image: url('c8t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-thumbnail.ep9 {
+            background-image: url('c9t1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .episode-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .episode-info {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .episode-number {
+            color: #d4af37;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .episode-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .episode-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+
+        .episode-description {
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .episode-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stars {
+            color: #d4af37;
+        }
+
+        /* Cast Section */
+        .cast {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4rem 2rem;
+        }
+
+        .cast-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cast h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .cast-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .cast-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .cast-photo {
+            width: 150px;
+            height: 150px;
+            /* 🖼️ REEMPLAZAR: Fotos del reparto */
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid #d4af37;
+        }
+
+        .cast-photo-pedro {
+            width: 150px;
+            height: 150px;
+            background-image: url('joel.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid #d4af37;
+        }
+
+        .cast-photo-bella {
+            width: 150px;
+            height: 150px;
+            background-image: url('ellie.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid #d4af37;
+        }
+
+        .cast-photo-anna {
+            width: 150px;
+            height: 150px;
+            background-image: url('tess.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid #d4af37;
+        }
+
+        .cast-photo-merle {
+            width: 150px;
+            height: 150px;
+            background-image: url('marlene.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid #d4af37;
+        }
+
+        .cast-name {
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .cast-character {
+            font-size: 0.9rem;
+            color: #d4af37;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            height: 200px;
+            /* 🖼️ REEMPLAZAR: Imágenes de momentos destacados */
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item.moment1 {
+            background-image: url('jyt.png');
+            background-size: cover;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item.moment2 {
+            background-image: url('decision.png');
+            background-size: cover;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item.moment3 {
+            background-image: url('byf.png');
+            background-size: cover;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item.moment4 {
+            background-image: url('zombie.jpg');
+            background-size: cover;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 1rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Navigation */
+        .season-nav {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .nav-btn.disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f4d03f;
+        }
+
+        .footer p {
+            color: #888;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .episode-card {
+                grid-template-columns: 1fr;
+            }
+
+            .episode-thumbnail {
+                height: 200px;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cast-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <img src="logo2.png" class="logo" alt="The Last of Us Logo">
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="temporadas.html">Temporadas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="index.html">Inicio</a>
+            <span>›</span>
+            <a href="temporadas.html">Temporadas</a>
+            <span>›</span>
+            <span>Temporada 1</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Temporada 1</h1>
+            <div class="hero-meta">
+                <span>📅 2023</span>
+                <span>⭐ 8.7/10</span>
+                <span>🎬 9 Episodios</span>
+                <span>⏱️ ~60 min</span>
+            </div>
+            <p>El viaje de Joel y Ellie a través de un Estados Unidos post-apocalíptico. Una historia de supervivencia, pérdida y la búsqueda de esperanza en la humanidad.</p>
+        </div>
+    </section>
+
+    <!-- Season Stats -->
+    <section class="season-stats">
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-number" data-count="9">0</span>
+                <span class="stat-label">Episodios</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-count="15">0</span>
+                <span class="stat-label">Millones de Espectadores</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-count="96">0</span>
+                <span class="stat-label">% en Rotten Tomatoes</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-count="8">0</span>
+                <span class="stat-label">Nominaciones Emmy</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Episodes Section -->
+    <section class="episodes">
+        <h2>Todos los Episodios</h2>
+        <div class="episodes-grid">
+            <!-- Episodio 1 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep1">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x01 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 1</div>
+                    <h3 class="episode-title">When You're Lost in the Darkness</h3>
+                    <div class="episode-meta">
+                        <span>📅 15 Ene 2023</span>
+                        <span>⏱️ 81 min</span>
+                        <span>👁️ 4.7M</span>
+                    </div>
+                    <p class="episode-description">
+                        Veinte años después del colapso de la civilización moderna, Joel Miller vive como contrabandista en una zona de cuarentena. Su mundo cambia cuando conoce a Ellie, una adolescente con un secreto que podría cambiar el destino de la humanidad.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>9.0/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 2 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep2">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x02 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 2</div>
+                    <h3 class="episode-title">Infected</h3>
+                    <div class="episode-meta">
+                        <span>📅 22 Ene 2023</span>
+                        <span>⏱️ 54 min</span>
+                        <span>👁️ 5.7M</span>
+                    </div>
+                    <p class="episode-description">
+                        Joel, Tess y Ellie se aventuran fuera de la zona de cuarentena de Boston y se enfrentan a los peligros del mundo exterior, incluyendo a los infectados y otros supervivientes desesperados.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>8.8/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 3 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep3">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x03 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 3</div>
+                    <h3 class="episode-title">Long, Long Time</h3>
+                    <div class="episode-meta">
+                        <span>📅 29 Ene 2023</span>
+                        <span>⏱️ 76 min</span>
+                        <span>👁️ 6.4M</span>
+                    </div>
+                    <p class="episode-description">
+                        Joel y Ellie buscan a Bill, un viejo conocido de Joel. Descubren la historia de amor entre Bill y Frank, y cómo encontraron esperanza y felicidad en un mundo devastado.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>9.1/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 4 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep4">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x04 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 4</div>
+                    <h3 class="episode-title">Please Hold to My Hand</h3>
+                    <div class="episode-meta">
+                        <span>📅 5 Feb 2023</span>
+                        <span>⏱️ 45 min</span>
+                        <span>👁️ 6.9M</span>
+                    </div>
+                    <p class="episode-description">
+                        Joel y Ellie llegan a Kansas City, donde se encuentran con Kathleen y su grupo de revolucionarios. La búsqueda de Henry y Sam los lleva a un enfrentamiento peligroso.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span>8.5/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 5 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep5">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x05 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 5</div>
+                    <h3 class="episode-title">Endure and Survive</h3>
+                    <div class="episode-meta">
+                        <span>📅 12 Feb 2023</span>
+                        <span>⏱️ 56 min</span>
+                        <span>👁️ 7.5M</span>
+                    </div>
+                    <p class="episode-description">
+                        Joel, Ellie, Henry y Sam intentan escapar de Kansas City, pero se enfrentan a una horda masiva de infectados. Las decisiones desesperadas llevan a consecuencias trágicas.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>9.2/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 6 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep6">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x06 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 6</div>
+                    <h3 class="episode-title">Kin</h3>
+                    <div class="episode-meta">
+                        <span>📅 19 Feb 2023</span>
+                        <span>⏱️ 41 min</span>
+                        <span>👁️ 7.2M</span>
+                    </div>
+                    <p class="episode-description">
+                        Joel y Ellie llegan a Jackson, Wyoming, donde Joel se reencuentra con su hermano Tommy. Ellie descubre más sobre el pasado de Joel y su pérdida.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span>8.7/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 7 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep7">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x07 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 7</div>
+                    <h3 class="episode-title">Left Behind</h3>
+                    <div class="episode-meta">
+                        <span>📅 26 Feb 2023</span>
+                        <span>⏱️ 54 min</span>
+                        <span>👁️ 6.8M</span>
+                    </div>
+                    <p class="episode-description">
+                        Flashback a la vida de Ellie antes de conocer a Joel. Su amistad con Riley y los eventos que llevaron a su inmunidad. En el presente, Ellie cuida a Joel herido.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>8.9/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 8 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep8">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x08 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 8</div>
+                    <h3 class="episode-title">When We Are in Need</h3>
+                    <div class="episode-meta">
+                        <span>📅 5 Mar 2023</span>
+                        <span>⏱️ 54 min</span>
+                        <span>👁️ 7.6M</span>
+                    </div>
+                    <p class="episode-description">
+                        Joel y Ellie encuentran refugio con David y su grupo religioso. Las verdaderas intenciones de David se revelan, llevando a Ellie a una situación desesperada.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>9.0/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodio 9 -->
+            <div class="episode-card">
+                <div class="episode-thumbnail ep9">
+                    <!-- 🖼️ REEMPLAZAR: Miniatura del episodio 1x09 -->
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="episode-info">
+                    <div class="episode-number">EPISODIO 9</div>
+                    <h3 class="episode-title">Look for the Light</h3>
+                    <div class="episode-meta">
+                        <span>📅 12 Mar 2023</span>
+                        <span>⏱️ 45 min</span>
+                        <span>👁️ 8.2M</span>
+                    </div>
+                    <p class="episode-description">
+                        Joel y Ellie finalmente llegan al hospital de las Luciérnagas en Salt Lake City. Joel debe tomar la decisión más difícil de su vida cuando se entera del precio de la cura.
+                    </p>
+                    <div class="episode-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>9.3/10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cast Section -->
+    <section class="cast">
+        <div class="cast-container">
+            <h2>Reparto Principal</h2>
+            <div class="cast-grid">
+                <div class="cast-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="pedro" para foto real -->
+                    <div class="cast-photo-pedro"></div>
+                    <div class="cast-name">Pedro Pascal</div>
+                    <div class="cast-character">Joel Miller</div>
+                </div>
+                <div class="cast-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="bella" para foto real -->
+                    <div class="cast-photo-bella"></div>
+                    <div class="cast-name">Bella Ramsey</div>
+                    <div class="cast-character">Ellie Williams</div>
+                </div>
+                <div class="cast-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="anna" para foto real -->
+                    <div class="cast-photo-anna"></div>
+                    <div class="cast-name">Anna Torv</div>
+                    <div class="cast-character">Tess Servopoulos</div>
+                </div>
+                <div class="cast-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="merle" para foto real -->
+                    <div class="cast-photo-merle"></div>
+                    <div class="cast-name">Merle Dandridge</div>
+                    <div class="cast-character">Marlene</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <h2>Momentos Destacados</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item moment1">
+                <!-- 🖼️ REEMPLAZAR: Momento destacado 1 -->
+                <div class="gallery-overlay">
+                    <h4>El Reencuentro</h4>
+                    <p>Joel y Tommy se reencuentran después de años</p>
+                </div>
+            </div>
+            <div class="gallery-item moment2">
+                <!-- 🖼️ REEMPLAZAR: Momento destacado 2 -->
+                <div class="gallery-overlay">
+                    <h4>La Decisión Final</h4>
+                    <p>Joel toma la decisión más difícil de su vida</p>
+                </div>
+            </div>
+            <div class="gallery-item moment3">
+                <!-- 🖼️ REEMPLAZAR: Momento destacado 3 -->
+                <div class="gallery-overlay">
+                    <h4>Bill y Frank</h4>
+                    <p>Una historia de amor en el apocalipsis</p>
+                </div>
+            </div>
+            <div class="gallery-item moment4">
+                <!-- 🖼️ REEMPLAZAR: Momento destacado 4 -->
+                <div class="gallery-overlay">
+                    <h4>Los Infectados</h4>
+                    <p>El terror de los clickers y bloaters</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Season Navigation -->
+    <section class="season-nav">
+        <div class="nav-buttons">
+            <a href="temporadas.html" class="nav-btn">← Volver a Temporadas</a>
+            <a href="temporada2.html" class="nav-btn">Temporada 2 →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="galeria.html">Galería</a>
+                <a href="temporadas.html">Temporadas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+            <p>&copy; 2024 The Last of Us Fan Site. Todos los derechos reservados a HBO y Naughty Dog.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de aparición de elementos al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Función para animar contadores
+        function animateCounter(element, start, end, suffix = '') {
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let current = start;
+                        const increment = end / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= end) {
+                                element.textContent = end + suffix;
+                                clearInterval(timer);
+                            } else {
+                                element.textContent = Math.floor(current) + suffix;
+                            }
+                        }, 30);
+                        counterObserver.unobserve(element);
+                    }
+                });
+            });
+            counterObserver.observe(element);
+        }
+
+        // Configurar animaciones de entrada
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación para las tarjetas de episodios
+            const episodeCards = document.querySelectorAll('.episode-card');
+            episodeCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = `all 0.8s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Animación para las tarjetas de estadísticas
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Animación para las tarjetas del reparto
+            const castCards = document.querySelectorAll('.cast-card');
+            castCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Animación para los elementos de la galería
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            galleryItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.8)';
+                item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(item);
+            });
+
+            // Configurar contadores animados
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                animateCounter(counter, 0, target);
+            });
+
+            // Efecto hover mejorado para las tarjetas de episodios
+            episodeCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Efecto parallax suave en el hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < hero.offsetHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Función para navegar entre episodios (para futuras funcionalidades)
+        function navigateToEpisode(episodeNumber) {
+            const episodeCard = document.querySelector(`.episode-card:nth-child(${episodeNumber})`);
+            if (episodeCard) {
+                episodeCard.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                episodeCard.style.animation = 'pulse 1s ease-in-out';
+            }
+        }
+
+        // Función de búsqueda de episodios (para futuras funcionalidades)
+        function searchEpisodes(query) {
+            const episodeCards = document.querySelectorAll('.episode-card');
+            episodeCards.forEach(card => {
+                const title = card.querySelector('.episode-title').textContent.toLowerCase();
+                const description = card.querySelector('.episode-description').textContent.toLowerCase();
+                
+                if (title.includes(query.toLowerCase()) || description.includes(query.toLowerCase())) {
+                    card.style.display = 'grid';
+                    card.style.opacity = '1';
+                } else {
+                    card.style.display = 'none';
+                    card.style.opacity = '0';
+                }
+            });
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986eb11b71287842',t:'MTc1OTE4MjU4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
