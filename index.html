@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last of Us - Serie HBO</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            max-width: 20%;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            /* 🖼️ REEMPLAZAR ESTA IMAGEN DE FONDO: Usar imagen principal de The Last of Us */
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop') center/cover;
+            /* Alternativa con SVG (reemplazar por imagen real): */
+            /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23654321" width="1200" height="800"/><circle fill="%23228B22" cx="200" cy="150" r="80" opacity="0.3"/><circle fill="%23228B22" cx="800" cy="200" r="60" opacity="0.2"/><circle fill="%23228B22" cx="1000" cy="400" r="100" opacity="0.3"/><rect fill="%238B4513" x="0" y="600" width="1200" height="200"/><polygon fill="%232F4F4F" points="300,600 500,400 700,600"/><polygon fill="%232F4F4F" points="800,600 1000,350 1200,600"/></svg>'); */
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content .typing-text {
+            overflow: hidden;
+            border-right: 3px solid #d4af37;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #d4af37; }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #d4af37;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .about-card h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .about-card p {
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        /* Characters Section */
+        .characters {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5rem 2rem;
+        }
+
+        .characters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .characters h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .character-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .character-card:hover {
+            transform: scale(1.05);
+            border-color: #d4af37;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .character-avatar {
+            width: 120px;
+            height: 120px;
+            /* 🖼️ REEMPLAZAR ESTAS IMÁGENES: Usar fotos reales de los personajes */
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        /* Ejemplo de cómo usar imágenes reales para los avatares: */
+        .character-avatar-joel {
+            background-image: url('joel.jpg');
+            background-size: cover;      /* hace que rellene el círculo */
+            background-position: center; /* centra la cara */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .character-avatar-ellie {
+            background-image: url('ellie.png');
+            background-size: cover;
+            background-position: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .character-avatar-tess {
+            background-image: url('tess.png');
+            background-size: cover;
+            background-position: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .character-avatar-marlene {
+            background-image: url('marlene.png');
+            background-size: cover;
+            background-position: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+
+        .character-card h3 {
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        .character-card p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f4d03f;
+        }
+
+        .footer p {
+            color: #888;
+            margin-top: 2rem;
+        }
+
+        /* Gallery Preview Section */
+        .gallery-preview {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-preview h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #d4af37;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            /* 🖼️ REEMPLAZAR ESTAS IMÁGENES: Usar capturas de pantalla de la serie */
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+        }
+
+        .gallery-item:nth-child(1) {
+            background-image: url('jye.webp');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .gallery-item:nth-child(2) {
+            background-image: url('zombie.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .gallery-item:nth-child(3) {
+            background-image: url('posta.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(212,175,55,0.3));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .characters-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <img src="logo2.png" class="logo" alt="The Last of Us Logo">
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="temporadas.html">Temporadas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-particles"></div>
+        <div class="hero-content">
+            <h1 class="typing-text">The Last of Us</h1>
+            <p>En un mundo devastado por una pandemia fúngica, Joel y Ellie emprenden un peligroso viaje a través de Estados Unidos post-apocalíptico. Una historia de supervivencia, pérdida y la búsqueda de esperanza en la humanidad.</p>
+            <a href="temporadas.html" class="cta-button pulse-animation">Explorar Temporadas</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <h2>Sobre la Serie</h2>
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>🎮 Basada en el Videojuego</h3>
+                <p>Adaptación fiel del aclamado videojuego de Naughty Dog, manteniendo la esencia y profundidad emocional de la historia original.</p>
+            </div>
+            <div class="about-card">
+                <h3>🏆 Premiada por la Crítica</h3>
+                <p>Reconocida mundialmente por su narrativa excepcional, actuaciones magistrales y producción de alta calidad que redefine las adaptaciones de videojuegos.</p>
+            </div>
+            <div class="about-card">
+                <h3>🧟 Apocalipsis Único</h3>
+                <p>Una perspectiva fresca del género zombie con infectados por hongos cordyceps, creando criaturas aterradoras y un mundo post-apocalíptico realista.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Preview Section -->
+    <section class="gallery-preview">
+        <h2>Galería de Momentos Épicos</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="gallery-overlay">
+                    <h3>Joel y Ellie</h3>
+                    <p>El vínculo padre-hija que define la serie</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-overlay">
+                    <h3>Los Infectados</h3>
+                    <p>Criaturas aterradoras del apocalipsis fúngico</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-overlay">
+                    <h3>Mundo Post-Apocalíptico</h3>
+                    <p>La naturaleza reclamando las ciudades abandonadas</p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <a href="galeria.html" class="cta-button">Ver Galería Completa</a>
+        </div>
+    </section>
+
+    <!-- Characters Section -->
+    <section class="characters">
+        <div class="characters-container">
+            <h2>Personajes Principales</h2>
+            <div class="characters-grid">
+                <div class="character-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="joel" al div para usar imagen real -->
+                    <div class="character-avatar-joel"></div>
+                    <h3>Joel Miller</h3>
+                    <p>Contrabandista endurecido por 20 años de supervivencia en el apocalipsis. Perdió a su hija Sarah al inicio del brote.</p>
+                </div>
+                <div class="character-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="ellie" al div para usar imagen real -->
+                    <div class="character-avatar-ellie"></div>
+                    <h3>Ellie Williams</h3>
+                    <p>Adolescente de 14 años inmune al hongo cordyceps. Representa la esperanza para encontrar una cura.</p>
+                </div>
+                <div class="character-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="tess" al div para usar imagen real -->
+                    <div class="character-avatar-tess"></div>
+                    <h3>Tess Servopoulos</h3>
+                    <p>Socia de Joel en el contrabando y su interés romántico. Pragmática y decidida a sobrevivir.</p>
+                </div>
+                <div class="character-card">
+                    <!-- 🖼️ REEMPLAZAR: Agregar class="marlene" al div para usar imagen real -->
+                    <div class="character-avatar-marlene"></div>
+                    <h3>Marlene</h3>
+                    <p>Líder de las Luciérnagas, grupo rebelde que busca restaurar el gobierno. Conoce el secreto de Ellie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#inicio">Inicio</a>
+                <a href="galeria.html">Galería</a>
+                <a href="temporadas.html">Temporadas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+            <p>&copy; 2024 The Last of Us Fan Site. Todos los derechos reservados a HBO y Naughty Dog.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Crear partículas flotantes en el hero
+        function createParticles() {
+            const particlesContainer = document.querySelector('.hero-particles');
+            if (!particlesContainer) return;
+
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Efecto parallax mejorado
+        let ticking = false;
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+
+        // Animación de aparición de elementos al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    
+                    // Agregar clase de animación especial para ciertos elementos
+                    if (entry.target.classList.contains('character-card')) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Efecto de escritura para el título
+        function typeWriter() {
+            const title = document.querySelector('.typing-text');
+            if (!title) return;
+            
+            const text = title.textContent;
+            title.textContent = '';
+            title.style.borderRight = '3px solid #d4af37';
+            
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    title.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, 100);
+                } else {
+                    // Efecto de parpadeo del cursor
+                    setTimeout(() => {
+                        title.style.borderRight = 'none';
+                    }, 1000);
+                }
+            }
+            
+            setTimeout(type, 1000);
+        }
+
+        // Efecto hover mejorado para las tarjetas de personajes
+        function setupCharacterCards() {
+            document.querySelectorAll('.character-card').forEach((card, index) => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05) rotateY(5deg)';
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotateY(0deg)';
+                    this.style.zIndex = '1';
+                });
+
+                // Animación de entrada escalonada
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = `all 0.6s ease ${index * 0.2}s`;
+                observer.observe(card);
+            });
+        }
+
+        // Efecto hover para elementos de galería
+        function setupGalleryEffects() {
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05) translateZ(0)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) translateZ(0)';
+                });
+
+                // Animación de entrada
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'all 0.6s ease';
+                observer.observe(item);
+            });
+        }
+
+        // Efecto de contador animado (para futuras estadísticas)
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                let current = 0;
+                const increment = target / 100;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                observer.observe(counter);
+                counter.addEventListener('animationstart', updateCounter);
+            });
+        }
+
+        // Inicialización cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            typeWriter();
+            setupCharacterCards();
+            setupGalleryEffects();
+            animateCounters();
+
+            // Aplicar animación a las tarjetas about
+            const aboutCards = document.querySelectorAll('.about-card');
+            aboutCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Efecto de carga completada
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Efecto de cursor personalizado (opcional)
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986ea65f3610ccba',t:'MTc1OTE4MjE0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

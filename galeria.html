@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - The Last of Us</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            max-width: 20%;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 2rem;
+            margin-top: 80px;
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: #888;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            /* 🖼️ REEMPLAZAR: Imagen de fondo de la galería */
+            background:
+                linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
+                url('joel.jpg') center / cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #d4af37;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            color: #e0e0e0;
+        }
+
+        /* Gallery Features */
+        .gallery-features {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #d4af37;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-item h3 {
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .feature-item p {
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Filter Tabs */
+        .filter-section {
+            padding: 3rem 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 25px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #000;
+            border-color: #d4af37;
+            transform: translateY(-2px);
+        }
+
+        .filter-tab:hover {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        /* Gallery Grid */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #d4af37;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            /* 🖼️ REEMPLAZAR: Imágenes de la galería */
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #d4af37;
+        }
+
+        /* Imágenes específicas - REEMPLAZAR con URLs reales */
+        .gallery-image.s1-joel-ellie {
+            background-image: url('bye.png');
+        }
+
+        .gallery-image.s1-infected {
+            background-image: url('infectado.png');
+        }
+
+        .gallery-image.s1-bill-frank {
+            background-image: url('byf.png');
+        }
+
+        .gallery-image.s1-hospital {
+            background-image: url('hospital.png');
+        }
+
+        .gallery-image.s1-fireflies {
+            background-image: url('luciernagas.png');
+        }
+
+        .gallery-image.s1-quarantine {
+            background-image: url('cuarentena.png');
+        }
+
+        .gallery-image.s2-abby {
+            background-image: url('aby.png');
+        }
+
+        .gallery-image.s2-seattle {
+            background-image: url('seattle.png');
+        }
+
+        .gallery-image.s2-ellie-dina {
+            background-image: url('eyd.png');
+        }
+
+        .gallery-image.s2-lev-yara {
+            background-image: url('lyy.png');
+        }
+
+        .gallery-image.s2-confrontation {
+            background-image: url('confrontacion.png');
+        }
+
+        .gallery-image.s2-finale {
+            background-image: url('final.webp');
+        }
+
+        .gallery-image.bts-set1 {
+            background-image: url('set.png');
+        }
+
+        .gallery-image.bts-cast {
+            background-image: url('reparto.png');
+        }
+
+        .gallery-image.bts-makeup {
+            background-image: url('maquillaje.jpg');
+        }
+
+        .gallery-image.bts-effects {
+            background-image: url('efectos.png');
+        }
+
+        .gallery-image.concept1 {
+            background-image: url('arte.png');
+        }
+
+        .gallery-image.concept2 {
+            background-image: url('ambiente.png');
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-size: 1.2rem;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .gallery-description {
+            font-size: 0.9rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+        }
+
+        .gallery-category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(212, 175, 55, 0.9);
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #d4af37;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #d4af37;
+        }
+
+        .modal-info {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .modal-description {
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(212, 175, 55, 0.9);
+            color: #000;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #d4af37;
+            transform: scale(1.1);
+        }
+
+        /* Modal Navigation */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(212, 175, 55, 0.9);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+        }
+
+        .modal-nav:hover {
+            background: #d4af37;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .modal-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        .modal-nav.prev {
+            left: 20px;
+        }
+
+        .modal-nav.next {
+            right: 20px;
+        }
+
+        .modal-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #d4af37;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-zoom-btn {
+            position: absolute;
+            top: 70px;
+            right: 1rem;
+            background: rgba(212, 175, 55, 0.9);
+            color: #000;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-zoom-btn:hover {
+            background: #d4af37;
+            transform: scale(1.1);
+        }
+
+        .modal-image.zoomed {
+            transform: scale(1.5);
+            cursor: grab;
+        }
+
+        .modal-image.zoomed:active {
+            cursor: grabbing;
+        }
+
+        /* Season Sections */
+        .season-section {
+            margin-bottom: 4rem;
+        }
+
+        .season-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .season-title {
+            font-size: 2.5rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .season-subtitle {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f4d03f;
+        }
+
+        .footer p {
+            color: #888;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .filter-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .modal-nav.prev {
+                left: 10px;
+            }
+
+            .modal-nav.next {
+                right: 10px;
+            }
+
+            .modal-content {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+
+            .modal-image {
+                height: 50vh;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: #d4af37;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hidden class for filtering */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Fade in animation for gallery items */
+        .gallery-item {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <img src="logo2.png" class="logo" alt="The Last of Us Logo">
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="temporadas.html">Temporadas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="index.html">Inicio</a>
+            <span>›</span>
+            <span>Galería</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Galería Visual</h1>
+            <p>Explora las imágenes más impactantes de ambas temporadas de The Last of Us. Desde momentos emotivos hasta escenas de acción épicas, revive la experiencia visual de esta increíble serie.</p>
+        </div>
+    </section>
+
+    <!-- Gallery Features -->
+    <section class="gallery-features">
+        <div class="features-container">
+            <div class="feature-item">
+                <div class="feature-icon">🏆</div>
+                <h3>Serie Galardonada</h3>
+                <p>Ganadora de múltiples Emmy y Critics' Choice Awards, incluyendo Mejor Serie Dramática</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎮</div>
+                <h3>Basada en el Videojuego</h3>
+                <p>Adaptación fiel del aclamado videojuego de Naughty Dog que conquistó a millones de jugadores</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🌍</div>
+                <h3>Fenómeno Mundial</h3>
+                <p>Vista por más de 32 millones de espectadores en su estreno, convirtiéndose en el mayor éxito de HBO</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎭</div>
+                <h3>Actuaciones Excepcionales</h3>
+                <p>Pedro Pascal y Bella Ramsey dan vida magistralmente a Joel y Ellie en esta emotiva historia</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">Todas las Imágenes</div>
+            <div class="filter-tab" data-filter="season1">Temporada 1</div>
+            <div class="filter-tab" data-filter="season2">Temporada 2</div>
+            <div class="filter-tab" data-filter="behind-scenes">Behind the Scenes</div>
+            <div class="filter-tab" data-filter="concept-art">Arte Conceptual</div>
+        </div>
+    </section>
+
+    <!-- Gallery Container -->
+    <div class="gallery-container">
+        <!-- Temporada 1 Section -->
+        <div class="season-section" data-category="season1">
+            <div class="season-header">
+                <h2 class="season-title">Temporada 1</h2>
+                <p class="season-subtitle">El viaje que cambió todo: Joel y Ellie atraviesan un mundo devastado</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="season1">
+                    <!-- 🖼️ REEMPLAZAR: Joel y Ellie caminando -->
+                    <div class="gallery-image s1-joel-ellie"></div>
+                    <div class="gallery-category">Temporada 1</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Joel y Ellie - El Viaje Comienza</h3>
+                        <p class="gallery-description">El momento icónico donde Joel y Ellie inician su travesía a través de América post-apocalíptica.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season1">
+                    <!-- 🖼️ REEMPLAZAR: Infectados atacando -->
+                    <div class="gallery-image s1-infected"></div>
+                    <div class="gallery-category">Temporada 1</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Los Infectados</h3>
+                        <p class="gallery-description">Las criaturas que han transformado el mundo en un lugar peligroso y desolado.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season1">
+                    <!-- 🖼️ REEMPLAZAR: Bill y Frank -->
+                    <div class="gallery-image s1-bill-frank"></div>
+                    <div class="gallery-category">Temporada 1</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Bill y Frank</h3>
+                        <p class="gallery-description">La emotiva historia de amor que nos mostró que la humanidad persiste incluso en los tiempos más oscuros.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season1">
+                    <!-- 🖼️ REEMPLAZAR: Hospital de las Luciérnagas -->
+                    <div class="gallery-image s1-hospital"></div>
+                    <div class="gallery-category">Temporada 1</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">El Hospital</h3>
+                        <p class="gallery-description">El lugar donde todo cambió: la decisión más difícil de Joel que definió el futuro.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season1">
+                    <!-- 🖼️ REEMPLAZAR: Símbolo de las Luciérnagas -->
+                    <div class="gallery-image s1-fireflies"></div>
+                    <div class="gallery-category">Temporada 1</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Las Luciérnagas</h3>
+                        <p class="gallery-description">La organización rebelde que buscaba restaurar la civilización y encontrar una cura.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season1">
+                    <!-- 🖼️ REEMPLAZAR: Zona de cuarentena -->
+                    <div class="gallery-image s1-quarantine"></div>
+                    <div class="gallery-category">Temporada 1</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Zona de Cuarentena</h3>
+                        <p class="gallery-description">Los últimos bastiones de la civilización donde los supervivientes luchan por mantener la esperanza.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Temporada 2 Section -->
+        <div class="season-section" data-category="season2">
+            <div class="season-header">
+                <h2 class="season-title">Temporada 2</h2>
+                <p class="season-subtitle">Las consecuencias del pasado: venganza, perdón y nuevos comienzos</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="season2">
+                    <!-- 🖼️ REEMPLAZAR: Abby Anderson -->
+                    <div class="gallery-image s2-abby"></div>
+                    <div class="gallery-category">Temporada 2</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Abby Anderson</h3>
+                        <p class="gallery-description">La nueva protagonista cuya historia está entrelazada con el pasado de Joel de maneras inesperadas.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season2">
+                    <!-- 🖼️ REEMPLAZAR: Seattle post-apocalíptico -->
+                    <div class="gallery-image s2-seattle"></div>
+                    <div class="gallery-category">Temporada 2</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Seattle Devastado</h3>
+                        <p class="gallery-description">La ciudad donde se desarrolla gran parte de la segunda temporada, llena de peligros y secretos.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season2">
+                    <!-- 🖼️ REEMPLAZAR: Ellie y Dina -->
+                    <div class="gallery-image s2-ellie-dina"></div>
+                    <div class="gallery-category">Temporada 2</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Ellie y Dina</h3>
+                        <p class="gallery-description">La relación que floreció en medio del caos, mostrando que el amor puede surgir en cualquier lugar.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season2">
+                    <!-- 🖼️ REEMPLAZAR: Lev y Yara -->
+                    <div class="gallery-image s2-lev-yara"></div>
+                    <div class="gallery-category">Temporada 2</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Lev y Yara</h3>
+                        <p class="gallery-description">Los hermanos que cambiaron la perspectiva de Abby y mostraron la importancia de la familia elegida.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season2">
+                    <!-- 🖼️ REEMPLAZAR: Confrontación final -->
+                    <div class="gallery-image s2-confrontation"></div>
+                    <div class="gallery-category">Temporada 2</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">La Confrontación</h3>
+                        <p class="gallery-description">El momento culminante donde el pasado y el presente colisionan en una batalla emocional.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="season2">
+                    <!-- 🖼️ REEMPLAZAR: Final de la temporada -->
+                    <div class="gallery-image s2-finale"></div>
+                    <div class="gallery-category">Temporada 2</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">El Final</h3>
+                        <p class="gallery-description">Un final que dividió a los fanáticos pero que demostró la complejidad de la naturaleza humana.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Behind the Scenes Section -->
+        <div class="season-section" data-category="behind-scenes">
+            <div class="season-header">
+                <h2 class="season-title">Behind the Scenes</h2>
+                <p class="season-subtitle">Descubre cómo se creó la magia detrás de las cámaras</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="behind-scenes">
+                    <!-- 🖼️ REEMPLAZAR: Set de filmación -->
+                    <div class="gallery-image bts-set1"></div>
+                    <div class="gallery-category">BTS</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">En el Set</h3>
+                        <p class="gallery-description">Los actores y el equipo trabajando juntos para crear momentos inolvidables.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="behind-scenes">
+                    <!-- 🖼️ REEMPLAZAR: Reparto entre tomas -->
+                    <div class="gallery-image bts-cast"></div>
+                    <div class="gallery-category">BTS</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">El Reparto</h3>
+                        <p class="gallery-description">Pedro Pascal, Bella Ramsey y el increíble elenco compartiendo momentos entre escenas.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="behind-scenes">
+                    <!-- 🖼️ REEMPLAZAR: Maquillaje y efectos -->
+                    <div class="gallery-image bts-makeup"></div>
+                    <div class="gallery-category">BTS</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Maquillaje y Efectos</h3>
+                        <p class="gallery-description">El increíble trabajo de transformación que convierte a los actores en infectados.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="behind-scenes">
+                    <!-- 🖼️ REEMPLAZAR: Efectos especiales -->
+                    <div class="gallery-image bts-effects"></div>
+                    <div class="gallery-category">BTS</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Efectos Especiales</h3>
+                        <p class="gallery-description">La tecnología y artesanía que da vida al mundo post-apocalíptico.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Concept Art Section -->
+        <div class="season-section" data-category="concept-art">
+            <div class="season-header">
+                <h2 class="season-title">Arte Conceptual</h2>
+                <p class="season-subtitle">Las primeras visiones que dieron forma al mundo de The Last of Us</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="concept-art">
+                    <!-- 🖼️ REEMPLAZAR: Arte conceptual 1 -->
+                    <div class="gallery-image concept1"></div>
+                    <div class="gallery-category">Concept Art</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Diseño de Personajes</h3>
+                        <p class="gallery-description">Los primeros bocetos y diseños que definieron la apariencia de nuestros protagonistas.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="concept-art">
+                    <!-- 🖼️ REEMPLAZAR: Arte conceptual 2 -->
+                    <div class="gallery-image concept2"></div>
+                    <div class="gallery-category">Concept Art</div>
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Ambientes Post-Apocalípticos</h3>
+                        <p class="gallery-description">Las ilustraciones que inspiraron los increíbles escenarios de la serie.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="imageModal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <button class="modal-zoom-btn" onclick="toggleZoom()">🔍</button>
+        <button class="modal-nav prev" id="prevBtn" onclick="navigateModal(-1)">‹</button>
+        <button class="modal-nav next" id="nextBtn" onclick="navigateModal(1)">›</button>
+        <div class="modal-counter" id="modalCounter">1 / 18</div>
+        <div class="modal-content">
+            <div class="modal-image" id="modalImage" onclick="toggleZoom()">🖼️</div>
+            <div class="modal-info">
+                <h3 class="modal-title" id="modalTitle">Título de la Imagen</h3>
+                <p class="modal-description" id="modalDescription">Descripción de la imagen...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="galeria.html">Galería</a>
+                <a href="temporadas.html">Temporadas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+            <p>&copy; 2024 The Last of Us Fan Site. Todos los derechos reservados a HBO y Naughty Dog.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let currentFilter = 'all';
+        let currentImageIndex = 0;
+        let galleryImages = [];
+        let isZoomed = false;
+
+        // Función para animar contadores
+        function animateCounter(element, start, end, suffix = '') {
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let current = start;
+                        const increment = end / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= end) {
+                                element.textContent = end + suffix;
+                                clearInterval(timer);
+                            } else {
+                                element.textContent = Math.floor(current) + suffix;
+                            }
+                        }, 30);
+                        counterObserver.unobserve(element);
+                    }
+                });
+            });
+            counterObserver.observe(element);
+        }
+
+        // Función para filtrar galería
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const sections = document.querySelectorAll('.season-section');
+            
+            // Actualizar tabs activos
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-filter="${category}"]`).classList.add('active');
+            
+            currentFilter = category;
+            
+            if (category === 'all') {
+                // Mostrar todas las secciones
+                sections.forEach(section => {
+                    section.style.display = 'block';
+                });
+                items.forEach((item, index) => {
+                    item.style.display = 'block';
+                    item.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`;
+                });
+            } else {
+                // Ocultar todas las secciones primero
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Mostrar solo la sección correspondiente
+                const targetSection = document.querySelector(`[data-category="${category}"]`);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    
+                    // Animar items de la sección visible
+                    const visibleItems = targetSection.querySelectorAll('.gallery-item');
+                    visibleItems.forEach((item, index) => {
+                        item.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`;
+                    });
+                }
+            }
+        }
+
+        // Función para inicializar galería
+        function initializeGallery() {
+            galleryImages = [];
+            const visibleItems = getVisibleGalleryItems();
+            
+            visibleItems.forEach((item, index) => {
+                const title = item.querySelector('.gallery-title').textContent;
+                const description = item.querySelector('.gallery-description').textContent;
+                const imageElement = item.querySelector('.gallery-image');
+                
+                // Intentar obtener la imagen de fondo
+                const computedStyle = window.getComputedStyle(imageElement);
+                const backgroundImage = computedStyle.backgroundImage;
+                let imageSrc = null;
+                
+                if (backgroundImage && backgroundImage !== 'none') {
+                    const matches = backgroundImage.match(/url\(["']?([^"']*)["']?\)/);
+                    if (matches && matches[1] && !matches[1].includes('REEMPLAZAR')) {
+                        imageSrc = matches[1];
+                    }
+                }
+                
+                galleryImages.push({
+                    title,
+                    description,
+                    imageSrc,
+                    element: item
+                });
+            });
+        }
+
+        // Función para obtener items visibles según filtro
+        function getVisibleGalleryItems() {
+            if (currentFilter === 'all') {
+                return Array.from(document.querySelectorAll('.gallery-item'));
+            } else {
+                const section = document.querySelector(`[data-category="${currentFilter}"]`);
+                return section ? Array.from(section.querySelectorAll('.gallery-item')) : [];
+            }
+        }
+
+        // Función para abrir modal
+        function openModal(title, description, imageSrc = null, itemElement = null) {
+            initializeGallery();
+            
+            // Encontrar el índice de la imagen actual
+            if (itemElement) {
+                currentImageIndex = galleryImages.findIndex(img => img.element === itemElement);
+                if (currentImageIndex === -1) currentImageIndex = 0;
+            }
+            
+            displayModalImage(currentImageIndex);
+            
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Animación de entrada
+            modal.style.animation = 'fadeInUp 0.3s ease-out';
+        }
+
+        // Función para mostrar imagen en modal
+        function displayModalImage(index) {
+            if (index < 0 || index >= galleryImages.length) return;
+            
+            const imageData = galleryImages[index];
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalImage = document.getElementById('modalImage');
+            const modalCounter = document.getElementById('modalCounter');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            modalTitle.textContent = imageData.title;
+            modalDescription.textContent = imageData.description;
+            modalCounter.textContent = `${index + 1} / ${galleryImages.length}`;
+            
+            if (imageData.imageSrc) {
+                modalImage.style.backgroundImage = `url(${imageData.imageSrc})`;
+                modalImage.style.backgroundSize = 'cover';
+                modalImage.style.backgroundPosition = 'center';
+                modalImage.textContent = '';
+            } else {
+                modalImage.style.backgroundImage = 'none';
+                modalImage.textContent = '🖼️';
+            }
+            
+            // Actualizar botones de navegación
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === galleryImages.length - 1;
+            
+            // Reset zoom
+            isZoomed = false;
+            modalImage.classList.remove('zoomed');
+        }
+
+        // Función para navegar en modal
+        function navigateModal(direction) {
+            const newIndex = currentImageIndex + direction;
+            if (newIndex >= 0 && newIndex < galleryImages.length) {
+                currentImageIndex = newIndex;
+                displayModalImage(currentImageIndex);
+            }
+        }
+
+        // Función para toggle zoom
+        function toggleZoom() {
+            const modalImage = document.getElementById('modalImage');
+            isZoomed = !isZoomed;
+            
+            if (isZoomed) {
+                modalImage.classList.add('zoomed');
+            } else {
+                modalImage.classList.remove('zoomed');
+            }
+        }
+
+        // Función para cerrar modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configurar filtros
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const filter = tab.getAttribute('data-filter');
+                    filterGallery(filter);
+                });
+            });
+
+            // Configurar clicks en items de galería
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const title = item.querySelector('.gallery-title').textContent;
+                    const description = item.querySelector('.gallery-description').textContent;
+                    const imageElement = item.querySelector('.gallery-image');
+                    
+                    // Intentar obtener la imagen de fondo
+                    const computedStyle = window.getComputedStyle(imageElement);
+                    const backgroundImage = computedStyle.backgroundImage;
+                    let imageSrc = null;
+                    
+                    if (backgroundImage && backgroundImage !== 'none') {
+                        // Extraer URL de la imagen de fondo
+                        const matches = backgroundImage.match(/url\(["']?([^"']*)["']?\)/);
+                        if (matches && matches[1] && !matches[1].includes('REEMPLAZAR')) {
+                            imageSrc = matches[1];
+                        }
+                    }
+                    
+                    openModal(title, description, imageSrc, item);
+                });
+            });
+
+            // Controles de teclado
+            document.addEventListener('keydown', (e) => {
+                const modal = document.getElementById('imageModal');
+                if (modal.style.display === 'block') {
+                    switch(e.key) {
+                        case 'Escape':
+                            closeModal();
+                            break;
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            navigateModal(-1);
+                            break;
+                        case 'ArrowRight':
+                            e.preventDefault();
+                            navigateModal(1);
+                            break;
+                        case ' ':
+                        case 'Enter':
+                            e.preventDefault();
+                            toggleZoom();
+                            break;
+                    }
+                }
+            });
+
+            // Cerrar modal clickeando fuera
+            document.getElementById('imageModal').addEventListener('click', (e) => {
+                if (e.target.id === 'imageModal') {
+                    closeModal();
+                }
+            });
+
+            // Inicializar efectos de características
+            const featureItems = document.querySelectorAll('.feature-item');
+            featureItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Animación de aparición de elementos
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observar elementos para animaciones
+            document.querySelectorAll('.stat-item, .season-header').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Efecto parallax suave en el hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < hero.offsetHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Función para compartir imágenes (futura funcionalidad)
+        function shareImage(title, description) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: description,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback para navegadores que no soportan Web Share API
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(`${title} - ${description}`);
+                const shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                window.open(shareUrl, '_blank', 'noopener,noreferrer');
+            }
+        }
+
+        // Función para descargar imagen (futura funcionalidad)
+        function downloadImage(imageSrc, filename) {
+            if (imageSrc && !imageSrc.includes('REEMPLAZAR')) {
+                const link = document.createElement('a');
+                link.href = imageSrc;
+                link.download = filename || 'tlou-image.jpg';
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        // Lazy loading para imágenes (optimización)
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    // Aquí se cargarían las imágenes reales cuando estén disponibles
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        // Observar todas las imágenes para lazy loading
+        document.querySelectorAll('.gallery-image').forEach(img => {
+            imageObserver.observe(img);
+        });
+
+        // Efectos de partículas en hover
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', createParticleEffect);
+        });
+
+        // Función para crear efecto de partículas
+        function createParticleEffect(e) {
+            const item = e.currentTarget;
+            const rect = item.getBoundingClientRect();
+            
+            for (let i = 0; i < 6; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 4px;
+                    height: 4px;
+                    background: #d4af37;
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1000;
+                    left: ${rect.left + Math.random() * rect.width}px;
+                    top: ${rect.top + Math.random() * rect.height}px;
+                    animation: particleFloat 2s ease-out forwards;
+                `;
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 2000);
+            }
+        }
+
+        // Agregar animaciones CSS dinámicas
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes particleFloat {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-50px) scale(0);
+                }
+            }
+            
+            .gallery-item:hover .gallery-image {
+                animation: imageGlow 0.5s ease-in-out;
+            }
+            
+            @keyframes imageGlow {
+                0%, 100% { 
+                    filter: brightness(1) saturate(1); 
+                }
+                50% { 
+                    filter: brightness(1.2) saturate(1.3) contrast(1.1); 
+                }
+            }
+
+            .feature-item {
+                animation: featureFloat 3s ease-in-out infinite;
+            }
+
+            .feature-item:nth-child(1) { animation-delay: 0s; }
+            .feature-item:nth-child(2) { animation-delay: 0.5s; }
+            .feature-item:nth-child(3) { animation-delay: 1s; }
+            .feature-item:nth-child(4) { animation-delay: 1.5s; }
+
+            @keyframes featureFloat {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986ed1f33724f5d6',t:'MTc1OTE4MzkyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
